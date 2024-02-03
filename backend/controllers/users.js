@@ -6,6 +6,7 @@ const BadRequestError = require('../errors/bad-request');
 const ConflictError = require('../errors/conflict');
 const NotFoundError = require('../errors/not-found');
 const UnauthorizedError = require('../errors/unauthorized');
+const { jwtSecret } = require('../app');
 
 // Получение всех пользователей
 exports.getAllUsers = async (req, res, next) => {
@@ -157,13 +158,13 @@ exports.login = (req, res, next) => {
             return;
           }
 
-          const token = jwt.sign({ _id: user._id }, 'secret-key', { expiresIn: '7d' });
+          const token = jwt.sign({ _id: user._id }, jwtSecret, { expiresIn: '7d' });
 
-          res.cookie('jwt', token, {
-            maxAge: 3600000 * 24 * 7,
-            httpOnly: true,
-          });
-          res.send({ message: 'Аутентификация прошла успешно' }); // убрал токен из тела ответа
+          // res.cookie('jwt', token, {
+          //   maxAge: 3600000 * 24 * 7,
+          //   httpOnly: true,
+          // });
+          res.send({ token, message: 'Аутентификация прошла успешно' });
         })
         .catch(next);
     })

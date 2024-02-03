@@ -1,18 +1,22 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
-const cookieParser = require('cookie-parser'); // cookie
+// const cookieParser = require('cookie-parser');
+const winston = require('winston');
+require('dotenv').config();
+const expressWinston = require('express-winston');
 const userRoutes = require('./routes/users');
 const cardRoutes = require('./routes/cards');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { registrationSchema, loginSchema } = require('./middlewares/validationSchemas');
 const NotFoundError = require('./errors/not-found');
-const winston = require('winston');
-const expressWinston = require('express-winston');
+
+const jwtSecret = process.env.NODE_ENV === 'production' ? process.env.JWT_SECRET : 'dev-secret';
+module.exports.jwtSecret = jwtSecret;
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 const requestLogger = expressWinston.logger({
   transports: [
@@ -34,14 +38,13 @@ const errorLogger = expressWinston.errorLogger({
   ),
 });
 
-// mongoose.connect('mongodb://localhost:27017/mestodb'); тестирую ошибку при запуске сервера
-mongoose.connect('mongodb://127.0.0.1:27017/mestodb'); // только так заработало
+mongoose.connect(process.env.MONGODB_URI);
 
 app.use(requestLogger); // req logging
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+// app.use(cookieParser());
 
 app.post('/signin', loginSchema, login);
 app.post('/signup', registrationSchema, createUser);
