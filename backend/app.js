@@ -13,7 +13,7 @@ const { registrationSchema, loginSchema } = require('./middlewares/validationSch
 const NotFoundError = require('./errors/not-found');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000 || process.env.PORT;
 
 const requestLogger = expressWinston.logger({
   transports: [
