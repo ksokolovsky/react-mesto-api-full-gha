@@ -49,6 +49,12 @@ app.post('/signup', registrationSchema, createUser);
 app.use('/users', auth, userRoutes);
 app.use('/cards', auth, cardRoutes);
 
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
 app.use(auth, (req, res, next) => {
   next(new NotFoundError('Запрашиваемый ресурс не найден. Неизвестный маршрут'));
 });
