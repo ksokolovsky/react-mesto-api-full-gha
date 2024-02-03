@@ -12,9 +12,6 @@ const auth = require('./middlewares/auth');
 const { registrationSchema, loginSchema } = require('./middlewares/validationSchemas');
 const NotFoundError = require('./errors/not-found');
 
-const jwtSecret = process.env.NODE_ENV === 'production' ? process.env.JWT_SECRET : 'dev-secret';
-module.exports.jwtSecret = jwtSecret;
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 

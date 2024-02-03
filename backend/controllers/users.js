@@ -6,7 +6,7 @@ const BadRequestError = require('../errors/bad-request');
 const ConflictError = require('../errors/conflict');
 const NotFoundError = require('../errors/not-found');
 const UnauthorizedError = require('../errors/unauthorized');
-const { jwtSecret } = require('../app');
+const { jwtSecret } = require('../config');
 
 // Получение всех пользователей
 exports.getAllUsers = async (req, res, next) => {
