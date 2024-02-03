@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.145.206
+IP-адрес IPv4 158.160.145.206
 
 Frontend https://ksokolovsky.nomoredomainsmonster.ru
 
