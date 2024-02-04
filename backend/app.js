@@ -5,6 +5,7 @@ const { errors } = require('celebrate');
 const winston = require('winston');
 require('dotenv').config();
 const expressWinston = require('express-winston');
+const cors = require('cors');
 const userRoutes = require('./routes/users');
 const cardRoutes = require('./routes/cards');
 const { login, createUser } = require('./controllers/users');
@@ -14,6 +15,14 @@ const NotFoundError = require('./errors/not-found');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const allowedCors = [
+  'https://ksokolovsky.nomoredomainsmonster.ru',
+  'https://api.ksokolovsky.nomoredomainsmonster.ru',
+  'http://ksokolovsky.nomoredomainsmonster.ru',
+  'http://api.ksokolovsky.nomoredomainsmonster.ru',
+  'http://localhost:3000',
+  'https://localhost:3000'
+];
 
 const requestLogger = expressWinston.logger({
   transports: [
@@ -36,6 +45,20 @@ const errorLogger = expressWinston.errorLogger({
 });
 
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
+
+app.use(function(req, res, next) {
+  const { origin } = req.headers;
+  if (allowedCors.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+  }
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
 
 app.use(requestLogger); // req logging
 
