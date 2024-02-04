@@ -9,6 +9,7 @@ exports.getCards = async (req, res, next) => {
   try {
     const cards = await Card.find({});
     res.send({ data: cards });
+    console.log(cards, 'backend - kontroller cards');
   } catch (error) {
     next(error);
   }
