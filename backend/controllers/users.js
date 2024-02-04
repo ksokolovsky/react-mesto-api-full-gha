@@ -157,7 +157,7 @@ exports.login = (req, res, next) => {
             next(new UnauthorizedError('Неправильные почта или пароль'));
             return;
           }
-
+          console.log(jwtSecret, 'жвт секрет в контроллере логина')
           const token = jwt.sign({ _id: user._id }, jwtSecret, { expiresIn: '7d' });
 
           // res.cookie('jwt', token, {

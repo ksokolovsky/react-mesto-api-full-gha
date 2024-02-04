@@ -20,6 +20,7 @@ module.exports = (req, res, next) => {
   }
 
   try {
+    console.log(token, 'token v auth')
     const payload = jwt.verify(token, jwtSecret);
     req.user = payload;
     next();
