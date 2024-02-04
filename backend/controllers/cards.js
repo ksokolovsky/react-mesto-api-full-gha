@@ -8,8 +8,8 @@ const ForbiddenError = require('../errors/forbidden');
 exports.getCards = async (req, res, next) => {
   try {
     const cards = await Card.find({});
-    res.send({ data: cards });
     console.log(cards, 'backend - kontroller cards');
+    res.send({ data: cards });
   } catch (error) {
     next(error);
   }
