@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const Card = require('../models/card');
 const BadRequestError = require('../errors/bad-request');
 const NotFoundError = require('../errors/not-found');
@@ -8,7 +8,6 @@ const ForbiddenError = require('../errors/forbidden');
 exports.getCards = async (req, res, next) => {
   try {
     const cards = await Card.find({});
-    console.log(cards, 'backend - kontroller cards');
     res.send({ data: cards });
   } catch (error) {
     next(error);
@@ -35,10 +34,10 @@ exports.createCard = async (req, res, next) => {
 // удаляем карточку, если она наша
 exports.deleteCard = async (req, res, next) => {
   try {
-    if (!mongoose.isValidObjectId(req.params.cardId)) {
-      next(new BadRequestError('Некорректный ID карточки'));
-      return;
-    }
+    // if (!mongoose.isValidObjectId(req.params.cardId)) {
+    //   next(new BadRequestError('Некорректный ID карточки'));
+    //   return;
+    // }
 
     const card = await Card.findById(req.params.cardId);
     if (!card) {
@@ -61,10 +60,10 @@ exports.deleteCard = async (req, res, next) => {
 // лайкаем карточку
 exports.likeCard = async (req, res, next) => {
   try {
-    if (!mongoose.isValidObjectId(req.params.cardId)) {
-      next(new BadRequestError('Некорректный ID карточки'));
-      return;
-    }
+    // if (!mongoose.isValidObjectId(req.params.cardId)) {
+    //   next(new BadRequestError('Некорректный ID карточки'));
+    //   return;
+    // }
 
     const updatedCard = await Card.findByIdAndUpdate(
       req.params.cardId,
@@ -86,10 +85,10 @@ exports.likeCard = async (req, res, next) => {
 // Убираем лайк с карточки, если он наш
 exports.dislikeCard = async (req, res, next) => {
   try {
-    if (!mongoose.isValidObjectId(req.params.cardId)) {
-      next(new BadRequestError('Некорректный ID карточки'));
-      return;
-    }
+    // if (!mongoose.isValidObjectId(req.params.cardId)) {
+    //   next(new BadRequestError('Некорректный ID карточки'));
+    //   return;
+    // }
 
     const updatedCard = await Card.findByIdAndUpdate(
       req.params.cardId,

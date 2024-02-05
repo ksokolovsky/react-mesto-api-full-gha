@@ -21,8 +21,10 @@ const allowedCors = [
   'http://ksokolovsky.nomoredomainsmonster.ru',
   'http://api.ksokolovsky.nomoredomainsmonster.ru',
   'http://localhost:3000',
-  'https://localhost:3000'
+  'https://localhost:3000',
 ];
+
+app.use(cors());
 
 const requestLogger = expressWinston.logger({
   transports: [
@@ -46,7 +48,7 @@ const errorLogger = expressWinston.errorLogger({
 
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
 
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   const { origin } = req.headers;
   if (allowedCors.includes(origin)) {
     res.header('Access-Control-Allow-Origin', origin);
@@ -57,7 +59,7 @@ app.use(function(req, res, next) {
   if (req.method === 'OPTIONS') {
     return res.sendStatus(200);
   }
-  next();
+  return next();
 });
 
 app.use(requestLogger); // req logging

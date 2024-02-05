@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const validator = require('validator');
+// const validator = require('validator');
 const User = require('../models/user');
 const BadRequestError = require('../errors/bad-request');
 const ConflictError = require('../errors/conflict');
@@ -139,10 +139,10 @@ exports.updateAvatar = async (req, res, next) => {
 exports.login = (req, res, next) => {
   const { email, password } = req.body;
 
-  if (!validator.isEmail(email)) {
-    next(new BadRequestError('Некорректный формат email'));
-    return;
-  }
+  // if (!validator.isEmail(email)) {
+  //   next(new BadRequestError('Некорректный формат email'));
+  //   return;
+  // }
 
   User.findOne({ email }).select('+password')
     .then((user) => {
