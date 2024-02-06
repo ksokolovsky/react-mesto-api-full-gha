@@ -2,6 +2,9 @@ const jwt = require('jsonwebtoken');
 const UnauthorizedError = require('../errors/unauthorized');
 const { jwtSecret } = require('../config');
 
+console.log(process.env.NODE_ENV, 'env node_env - v auth');
+console.log(jwtSecret, 'jwtSecret v auth');
+
 module.exports = (req, res, next) => {
   // Авторизация через тело.
   const { authorization } = req.headers;
