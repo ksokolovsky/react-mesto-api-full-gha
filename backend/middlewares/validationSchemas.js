@@ -6,9 +6,7 @@ const registrationSchema = celebrate({
     password: Joi.string().required(),
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
-    avatar: Joi.string().uri({
-      scheme: ['http', 'https'],
-    }),
+    avatar: Joi.string().required().pattern(/^(https?:\/\/)?(www\.)?[\w-]+(\.[\w-]+)+(\/[^\s]*)?$/gm),
   }),
 });
 
@@ -28,7 +26,7 @@ const cardIdSchema = {
 const cardCreateSchema = {
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().pattern(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/gm),
+    link: Joi.string().required().pattern(/^(https?:\/\/)?(www\.)?[\w-]+(\.[\w-]+)+(\/[^\s]*)?$/gm),
   }),
 };
 
@@ -41,9 +39,7 @@ const updateProfileSchema = celebrate({
 
 const updateAvatarSchema = celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().uri({
-      scheme: ['http', 'https'],
-    }),
+    avatar: Joi.string().required().pattern(/^(https?:\/\/)?(www\.)?[\w-]+(\.[\w-]+)+(\/[^\s]*)?$/gm),
   }),
 });
 
