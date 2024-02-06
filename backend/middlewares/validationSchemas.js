@@ -6,7 +6,9 @@ const registrationSchema = celebrate({
     password: Joi.string().required(),
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
-    avatar: Joi.string().required().pattern(/^https?:\/\/(www\.)?[\w-]+(\.[\w-]+)+[^\s]*$/),
+    avatar: Joi.string().uri({
+      scheme: ['http', 'https'], // Указывает допустимые схемы для URI
+    }),
   }),
 });
 
@@ -41,7 +43,9 @@ const updateProfileSchema = celebrate({
 
 const updateAvatarSchema = celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().required().pattern(/^https?:\/\/(www\.)?[\w-]+(\.[\w-]+)+[^\s]*$/),
+    avatar: Joi.string().uri({
+      scheme: ['http', 'https'], // Указывает допустимые схемы для URI
+    }),
   }),
 });
 
