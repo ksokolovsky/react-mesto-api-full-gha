@@ -24,6 +24,8 @@ const allowedCors = [
   'https://localhost:3000',
 ];
 
+console.log(process.env.NODE_ENV);
+
 app.use(cors());
 
 const requestLogger = expressWinston.logger({
