@@ -26,7 +26,9 @@ const cardIdSchema = {
 const cardCreateSchema = {
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().pattern(/^https?:\/\/(www\.)?[\w-]+(\.[\w-]+)+[^\s]*$/),
+    link: Joi.string().uri({
+      scheme: ['http', 'https'], // Указывает допустимые схемы для URI
+    }),
   }),
 };
 
